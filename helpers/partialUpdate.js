@@ -33,7 +33,15 @@ function sqlForPartialUpdate(table, items, key, id) {
 
   // build query
   let cols = columns.join(", ");
-  let query = `UPDATE ${table} SET ${cols} WHERE ${key}=$${idx} RETURNING *`;
+
+  let query;
+  if(table === "users"){
+    query = `UPDATE ${table} SET ${cols} WHERE ${key}=$${idx} RETURNING username, first_name, last_name, email, photo_url`;
+  }
+  else{
+    query = `UPDATE ${table} SET ${cols} WHERE ${key}=$${idx} RETURNING *`;
+  }
+  
 
   let values = Object.values(items);
   values.push(id);

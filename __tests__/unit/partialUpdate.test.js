@@ -1,9 +1,15 @@
+
+const sqlForPartialUpdate = require("../../helpers/partialUpdate");
+
 describe("partialUpdate()", () => {
   it("should generate a proper partial update query with just 1 field",
-      function () {
+    function () {
+      const result = sqlForPartialUpdate("companies", {name : "test"}, "handle", "company1");
 
-    // FIXME: write real tests!
-    expect(false).toEqual(true);
-
+      expect(result.query).toEqual(
+        "UPDATE companies SET name=$1 WHERE handle=$2 RETURNING *"
+      );
+      // FIXME: write real tests!
+      expect(result.values).toEqual(["test", "company1"]);
   });
 });
